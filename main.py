@@ -2,6 +2,8 @@ from cProfile import label
 from email.mime import image
 from tkinter import image_names
 from fastapi import FastAPI, File, UploadFile
+from starlette.responses import Response
+from starlette.status import HTTP_200_OK
 from tensorflow import keras
 import tensorflow as tf
 import numpy as np
@@ -25,6 +27,11 @@ model = load_model(
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+
+@app.get("/health")
+async def healthCheck():
+    return Response(status_code=HTTP_200_OK)
 
 
 @app.post("/predict")
